@@ -1,0 +1,103 @@
+###CLUSTER METHOD###
+(Must utilize ssh) 
+0.:Initial setup for user:
+	1.Build Configuration file (this can happen in config command)
+		a.Request user
+		b.Request Hostname
+		c.Assumptions of HOME and related variables will be made
+		d.Assume cexec_exp_folder to be the folder for all data and executions
+	2.cexec configure batch __name__
+		a.Attempt to login to cluster
+		b.If unable to complete passwordless login
+			I.make configuration for passwordless (i.e. ssh-copy-id)
+			II. Make sure to explicitly state what is being done to user
+		c.Login complete
+		d.Create cexec configuration files and directories
+		e.Install cexec for worker scripts to be available (may not be needed)
+1.:Running an execution
+	1.cexec "execute run.mod" __name__
+		a.All files copied to server into 
+			~/cexec_exp_folder/local_execution_dir/run.mod
+		b.Generic batch script used to build custom script
+		c.Execution submitted to scheduler with custom script
+		d.Status of submitted job added to logs for later query
+	2.cexec status __name__
+		a.Send query command to batch scheduler
+		b.Capture output and hand off to user 
+			(maybe some pretty parsing but this is more likely to break in future)
+		c.If not done (parsing required) tell user
+		d.If done local status of run marked as Done
+	3.cexec transfer __name__ --clean
+		a.All files copied from server
+			(files copied to same directory command was executed from)
+		b.Local status of run marked as Done/transfered
+		c.If flag --clean given, server files and directory will be wiped
+			Local status of run marked as Done/cleaned
+ 
+###SSH METHOD###
+(Must utilize ssh) 
+0.:Initial setup for user:
+	1.Build Configuration file (this can happen in config command)
+		a.Request user
+		b.Request Hostname
+		c.Assumptions of HOME and related variables will be made
+		d.Assume cexec_exp_folder to be the folder for all data and executions
+	2.cexec configure batch __name__
+		a.Attempt to login to cluster
+		b.If unable to complete passwordless login
+			I.make configuration for passwordless (i.e. ssh-copy-id)
+			II. Make sure to explicitly state what is being done to user
+		c.Login complete
+		d.Create cexec configuration files and directories
+		e.Install cexec for worker scripts to be available (may not be needed)
+1.:Running an execution
+	1.cexec "execute run.mod" __name__
+		a.All files copied to server into 
+			~/cexec_exp_folder/local_execution_dir/run.mod
+		b.Execution started in headless mode
+		c.Status of submitted job added to logs for later query
+	2.cexec status __name__
+		a.Send query command to server process manager
+		b.Capture output and hand off to user 
+			(maybe some pretty parsing but this is more likely to break in future)
+		c.If not done (parsing required) tell user
+		d.If done local status of run marked as Done
+	3.cexec transfer __name__ --clean
+		a.All files copied from server
+			(files copied to same directory command was executed from)
+		b.Local status of run marked as Done/transfered
+		c.If flag --clean given, server files and directory will be wiped
+			Local status of run marked as Done/cleaned
+###AWS METHOD (incomplete)###
+(Must utilize ssh and AWS key) 
+0.:Initial setup for user:
+	1.Build Configuration file (this can happen in config command)
+		a.Request user
+		b.Request Hostname
+		c.Assumptions of HOME and related variables will be made
+		d.Assume cexec_exp_folder to be the folder for all data and executions
+	2.cexec configure batch __name__
+		a.Attempt to login to cluster
+		c.Login complete
+		d.Create cexec configuration files and directories
+		e.Install cexec for worker scripts to be available (may not be needed)
+1.:Running an execution
+	1.cexec "execute run.mod" __name__
+		a.All files copied to server into 
+			~/cexec_exp_folder/local_execution_dir/run.mod
+		b.Generic batch script used to build custom script
+		c.Execution submitted to scheduler with custom script
+		d.Status of submitted job added to logs for later query
+	2.cexec status __name__
+		a.Send query command to batch scheduler
+		b.Capture output and hand off to user 
+			(maybe some pretty parsing but this is more likely to break in future)
+		c.If not done (parsing required) tell user
+		d.If done local status of run marked as Done
+	3.cexec transfer __name__ --clean
+		a.All files copied from server
+			(files copied to same directory command was executed from)
+		b.Local status of run marked as Done/transfered
+		c.If flag --clean given, server files and directory will be wiped
+			Local status of run marked as Done/cleaned
+
