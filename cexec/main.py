@@ -9,12 +9,9 @@ Function to initiate the various steps of the program including
     5. cexec kill <__user_given_name__>
 
 """
-
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-
 
 import traceback
 import os
@@ -26,13 +23,16 @@ import re
 import time
 import yaml
 
-from utils.config import get_resource_list, print_resource_list
+from utils import get_resource_list, print_resource_list
 from parsers import menu_parser
 import actions.configure
 import actions.kill
 import actions.run
 import actions.transfer
 
+import settings
+
+settings.init()
 #from utils import extract_yaml_files
 
 #from execution.driver import Workflow, Application
@@ -41,12 +41,11 @@ import actions.transfer
 
 def configure(args):
     logger.info("We are setting up a cloud. | Do you feel like Zeus yet?")
-    print(args)
-    actions.configure.main()
+    actions.configure.main(args)
+
 def run(args):
     logger.info("We are going to try to get a cloud to follow our orders!")
-    print(args)
-    actions.run.main()
+    actions.run.main(args)
 
 def status(args):
     logger.info("Click your heels three times and wish"+
@@ -68,12 +67,12 @@ def resources(args):
     print_resource_list()
 
 def main():
-    logger.info("cexec called")
     args=menu_parser(configure,run,status,transfer,kill,resources)
     #logger.info("MODE: "+args.subparser_name)
-    args.func(args)
-    logger.info("Call to exec finsihed: Thank you for your patience"+
-        "\n\nLIVE LONG AND PROSPER - Willis' Last Wish")
+    if not args.parser==None:
+        args.func(args)
+    else:
+        print("No input provided: try [cexec --help] for options")
 
 if __name__=="__main__":
     main()

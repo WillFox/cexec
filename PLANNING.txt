@@ -101,3 +101,8 @@
 		c.If flag --clean given, server files and directory will be wiped
 			Local status of run marked as Done/cleaned
 
+#################
+FUTURE IMPROVEMENTS
+#################
+-Add settings for defaults that are use definable
+-Add options for how files are copied over

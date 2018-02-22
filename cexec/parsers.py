@@ -31,8 +31,9 @@ def _configure(subparsers,configure):
         '--type', 
         type=str,
         metavar="resource_type",
-        required=True,
-        help="Type of resource to configure {aws | batch | ssh}")
+        help="Type of resource to configure {ssh | slurm | torque | aws |"+
+                                    " google_cloud | azure | openstack}",
+        default="ssh")
     con.add_argument( 
         "-n",
         "--name",
@@ -56,6 +57,7 @@ def _run(subparsers,run):
         '--name', 
         type=str,
         metavar="resource_name",
+        required=True,
         help="Specific resource to run on.")
 
 def _status(subparsers,status): 
