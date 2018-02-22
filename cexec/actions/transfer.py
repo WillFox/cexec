@@ -4,8 +4,9 @@ logger = logging.getLogger(__name__)
 import subprocess
 import os
 import sys
-import cexec.settings
-from cexec.utils import get_resource, ssh_execute
+from ..utils import settings
+from ..utils.resource_interpreter import get_resource
+from ..utils.ssh_handler import ssh_execute
 
 def transfer_ssh(resource,args):
     #Get external project Directory

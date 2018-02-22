@@ -9,35 +9,15 @@ Function to initiate the various steps of the program including
     5. cexec kill <__user_given_name__>
 
 """
-import traceback
-import os
-import logging
-import sys
-import subprocess
-import random
-import re
-import time
-import yaml
-from utils import get_resource_list, print_resource_list
-from parsers import menu_parser
-import actions.configure
-import actions.kill
-import actions.run
-import actions.transfer
-import cexec.settings
-import logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-cexec.settings.init()
+from __init__.py import configure, run, status, transfer, kill, resources
 
 def configure(args):
     logger.info("We are setting up a cloud. | Do you feel like Zeus yet?")
-    actions.configure.main(args)
+    configure(args)
 
 def run(args):
     logger.info("We are going to try to get a cloud to follow our orders!")
-    actions.run.main(args)
+    run(args)
 
 def status(args):
     logger.info("Click your heels three times and wish"+
@@ -47,12 +27,12 @@ def status(args):
 def transfer(args):
     logger.info("Should we expect a drizzle or hurricane from this transfer")
     print(args)
-    actions.transfer.main()
+    transfer()
 def kill(args):
     logger.info("Clouds all go in time!  This one's"+
                                 " time has come. RIP Cloud Willis!")
     print(args)
-    actions.kill.main()
+    kill()
 
 def resources(args):
     logger.info("Clouds! Sound off!")

@@ -3,9 +3,10 @@
 """
 Each function configures its respective cloud technology
 """
-import cexec.settings
+from ..utils import settings
 import logging
-from cexec.utils import get_resource_list, write_resource_list, ssh_execute
+from ..utils.resource_interpreter import get_resource_list, write_resource_list
+from ..utils.ssh_handler import ssh_execute
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 

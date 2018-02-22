@@ -5,7 +5,6 @@ Function to initiate various tasks on a remote host
     3. cexec_worker kill
 
 """
-import subprocess
 import sys
 import logging
 import os
