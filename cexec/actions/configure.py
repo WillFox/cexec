@@ -9,8 +9,6 @@ from cexec.utils import get_resource_list, write_resource_list, ssh_execute
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
-
 def configure_ssh(args):
     logger.info("Attempting to add| type-{}||name-{}".format(
                                                 args.type,args.name))
@@ -40,6 +38,16 @@ def configure_ssh(args):
         print("You ssh connection is now set up as passwordless:\n\t "+
             "You should only need to ever configure this once per resource")
     logger.info("Writing {0}@{1} to resouces".format(uname,hostname))
+    #check if cexec installed on resource
+    p=ssh_execute("ssh-copy-id "+uname+"@"+hostname+' "which cexec"')
+    if p.stdout.readlines()==None:
+        pass
+    #install cexec in user directory (ask to do this)
+
+    #append cexec path (ask to do this)
+
+    #Verify cexec on resource
+
     #Add resource to list of available resources
     write_resource_list(resource_dict)
 

@@ -5,7 +5,7 @@ import subprocess
 import os
 import sys
 import cexec.settings
-from cexec.utils import get_resource, ssh_execute
+from .utils.ssh_handler import get_resource, ssh_execute
 
 def run_ssh(resource,args):
     #Get external project Directory
@@ -34,7 +34,7 @@ def run_ssh(resource,args):
     error=p.stderr.readlines()
     if error!=[]:
         print(p.stderr.readlines())
-    #Execute Script
+    #Execute Script by calling cexec worker
     if '"' in args.execution_command:
         logger.warn('Command includes a double quote (") and may cause '+
             'undesirable results. Swith to single quotes to avoid this '+

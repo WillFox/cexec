@@ -8,28 +8,36 @@ Function to initiate various tasks on a remote host
 import subprocess
 import sys
 import logging
+import os
+from .worker_actions import run
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+def worker_run(args):
+    run.main()
+    
+def worker_status(args):
+    cexec_dir=os.path.join(os.environ.get('HOME','/etc/cexec'),'.cexec')
+    pid_file=os.path.join(cexec_dir,'externally_called_pids.txt')
+    with open(pid_file,'r') as f:
+        lines=f.readlines()
+    for line in lines:
+
+def worker_clean(args):
+    cexec_dir=os.path.join(os.environ.get('HOME','/etc/cexec'),'.cexec')
+    pid_file=os.path.join(cexec_dir,'externally_called_pids.txt')
+    f=open(pid_file,'w')
+    f.close()
 
 def main(args):
     #execute command in desiganted directory
     logger.info("Worker call made:{}".format(args))    
-    directory=args[1]
-    command=args[2]
-    for arg in range(len(args)-3):
-        command=command+" "+args[arg+3]
-    print(command)
-    pid=subprocess.Popen([command+" > cexec.out 2>&1"],
-        cwd=directory,
-        shell=True
-        ).pid
+    if args[1]=='run':
+        worker_run(args)
+    if args[1]=='status':
+        worker_status(args)
+    if args[1]=='clean':
+        worker_clean(args)
 
-    #print (return to master process) and store pid
-    print(pid)
-    cexec_dir=os.path.join(os.environ.get('HOME','/etc/cexec'),'.cexec')
-    pid_file=os.path.join(cexec_dir,'externally_called_pids.txt')
-    with open(pid_file,'w') as f:
-        f.write(name+":"+directory+":"+pid)    
-    
 if __name__=="__main__":
     main(sys.argv)

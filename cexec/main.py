@@ -9,10 +9,6 @@ Function to initiate the various steps of the program including
     5. cexec kill <__user_given_name__>
 
 """
-import logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 import traceback
 import os
 import logging
@@ -22,22 +18,18 @@ import random
 import re
 import time
 import yaml
-
 from utils import get_resource_list, print_resource_list
 from parsers import menu_parser
 import actions.configure
 import actions.kill
 import actions.run
 import actions.transfer
+import cexec.settings
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-import settings
-
-settings.init()
-#from utils import extract_yaml_files
-
-#from execution.driver import Workflow, Application
-#from execution.submission import build_submission
-
+cexec.settings.init()
 
 def configure(args):
     logger.info("We are setting up a cloud. | Do you feel like Zeus yet?")
@@ -68,7 +60,6 @@ def resources(args):
 
 def main():
     args=menu_parser(configure,run,status,transfer,kill,resources)
-    #logger.info("MODE: "+args.subparser_name)
     if not args.parser==None:
         args.func(args)
     else:
