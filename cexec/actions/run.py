@@ -22,7 +22,7 @@ def run_ssh(resource,args):
     if local_dir==None:
         logger.error("$PWD not in environment and needed for execution")
         sys.exit()
-    external_dir=os.path.join(home,cexec.settings.DISTRIBUTED_DIR_BASE)
+    external_dir=os.path.join(home,settings.DISTRIBUTED_DIR_BASE)
     external_dir=external_dir+local_dir
     logger.info("External execution directory is: {}".format(external_dir))
     p=ssh_execute('ssh '+resource['uname']+'@'+resource['hostname']+
@@ -50,6 +50,8 @@ def run_ssh(resource,args):
         print(p.stderr.readlines())
     
     #Add status and PID
+    
+    
 
 def run_slurm(resource):
     pass

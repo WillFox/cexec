@@ -3,8 +3,8 @@ import sys
 
 from setuptools import setup, find_packages
 
-with open("cexec/version.py") as f:
-    code = compile(f.read(), "cexec/version.py", 'exec')
+with open("cexec/utils/version.py") as f:
+    code = compile(f.read(), "cexec/utils/version.py", 'exec')
     exec(code)
 
 install_requires = None
@@ -20,7 +20,8 @@ setup(name='cexec',
       author='William Fox',
       author_email='wfox413@gmail.com',
       url='https://www.github.com/WillFox/cexec/',
-      packages=find_packages(where='./', exclude=['test_runs','test_data'])+['cexec/templates'],
+      #packages=find_packages(where='./', exclude=['test_runs','test_data'])+['cexec/templates'],
+      packages=find_packages(where='./'),
       package_dir={'cexec': 'cexec'},
       keywords='workflow',
       license='LICENSE.txt',
@@ -37,6 +38,6 @@ setup(name='cexec',
       install_requires=install_requires,
       entry_points={
           'console_scripts': [
-              'cexec = cexec.main:main',
+              'cexec = cexec.cexec:main',
               'cexec_worker =  cexec.worker:main',
               ]})

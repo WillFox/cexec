@@ -13,9 +13,14 @@ logger = logging.getLogger(__name__)
 def configure_ssh(args):
     logger.info("Attempting to add| type-{}||name-{}".format(
                                                 args.type,args.name))
+    #UGLY PYTHON2 and PYTHON3 compatability solution
+    try:
+        input = raw_input
+    except NameError:
+        pass
     #Request info for configuration
-    uname=input("login id required for ssh [id in id@hostname]:")
-    hostname=input("Hostname for ssh [hostname in id@hostname]:")
+    uname=raw_input("login id required for ssh [id in id@hostname]:")
+    hostname=raw_input("Hostname for ssh [hostname in id@hostname]:")
     #Add to configuration file settings.CONFIG_FILE
     resource_dict=get_resource_list()
     if resource_dict==None:
@@ -42,7 +47,9 @@ def configure_ssh(args):
     #check if cexec installed on resource
     p=ssh_execute("ssh-copy-id "+uname+"@"+hostname+' "which cexec"')
     if p.stdout.readlines()==None:
-        pass
+        print(p.stdout.readlines())
+
+    print(p.stdout.readlines())
     #install cexec in user directory (ask to do this)
 
     #append cexec path (ask to do this)
