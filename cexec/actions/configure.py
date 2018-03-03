@@ -51,7 +51,7 @@ def configure_ssh(args):
 
     print(p.stdout.readlines())
     #install cexec in user directory (ask to do this)
-
+    
     #append cexec path (ask to do this)
 
     #Verify cexec on resource

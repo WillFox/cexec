@@ -15,7 +15,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def worker_run(args):
-    run.main()
+    print(args)
+    run.main(args)
     
 def worker_status(args):
     cexec_dir=os.path.join(os.environ.get('HOME','/etc/cexec'),'.cexec')
@@ -62,17 +63,15 @@ def _worker_run(subparsers):
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parse_run.set_defaults(func=worker_run)
     parse_run.add_argument(
+        "directory", 
+        type=str,
+        metavar="dir",
+        help="where to run command on resource")
+    parse_run.add_argument(
         "execution_command", 
         type=str,
         metavar="command",
         help="command to be run on resource")
-    parse_run.add_argument(
-        '-n',
-        '--name', 
-        type=str,
-        metavar="resource_name",
-        required=True,
-        help="Specific resource to run on.")
 
 def _worker_status(subparsers): 
     con = subparsers.add_parser(
@@ -98,14 +97,15 @@ def _worker_kill(subparsers):
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     con.set_defaults(func=worker_kill)
 
-def main(args):
+def main():
     #execute command in desiganted directory
-    logger.info("Worker call made:{}".format(args))  
     args=worker_menu_parser()
+    logger.info("Worker call made:{}".format(args))  
+    
     if not args.parser==None:
         args.func(args)
     else:
         print("No input provided: Are you sure you want to call cexec_worker?")
 
 if __name__=="__main__":
-    main(sys.argv)
+    main()

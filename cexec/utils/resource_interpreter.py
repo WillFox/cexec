@@ -6,6 +6,8 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+settings.init()
+
 def get_resource_list():
     if not os.path.isdir(settings.CONFIG_DIR):
         os.mkdir(settings.CONFIG_DIR)
@@ -51,3 +53,12 @@ def get_resource(name):
         logger.error("This resource does not exist: Exiting")
         sys.exit()    
     return resource
+
+def get_resource_type():
+    print(settings.RESOURCE_TYPE)
+    if not os.path.isfile(settings.RESOURCE_TYPE):
+        logging.error("The resource.type file is missing|Configure again")
+        sys.exit()
+    with open(settings.RESOURCE_TYPE,'r') as f:
+        resource_type=f.readlines()[0].strip('\n').strip('\r')
+    return resource_type

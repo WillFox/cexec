@@ -42,7 +42,7 @@
 		b.Request Hostname
 		c.Assumptions of HOME and related variables will be made
 		d.Assume cexec_exp_folder to be the folder for all data and executions
-	2.cexec configure batch __name__
+	2.cexec configure ssh __name__
 		a.Attempt to login to cluster
 		b.If unable to complete passwordless login
 			I.make configuration for passwordless (i.e. ssh-copy-id)
@@ -51,11 +51,17 @@
 		d.Create cexec configuration files and directories
 		e.Install cexec for worker scripts to be available (may not be needed)
 1.:Running an execution
-	1.cexec "execute run.mod" __name__
+	1.cexec run __name__ "execute run.mod" -q -nc
 		a.All files copied to server into 
 			~/cexec_exp_folder/local_execution_dir/run.mod
 		b.Execution started in headless mode
 		c.Status of submitted job added to logs for later query
+		d. -q flag means do not follow job until completion (default is follow)
+		e. -nc is no clean which means leave files after job completes and 
+			files transfer to your system (default is to clean directory)
+			Cleaning is performed in a "leave no trace" methodology
+		f.PID of each running execution is copied to both host and worker node.
+			queries are called matching host and worker pids
 	2.cexec status __name__
 		a.Send query command to server process manager
 		b.Capture output and hand off to user 

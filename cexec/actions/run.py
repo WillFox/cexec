@@ -5,7 +5,7 @@ import subprocess
 import os
 import sys
 from ..utils import settings
-from ..utils.ssh_handler import ssh_execute
+from ..utils.ssh_handler import ssh_execute, ssh_execute_no_wait
 from ..utils.resource_interpreter import get_resource
 
 def run_ssh(resource,args):
@@ -40,17 +40,28 @@ def run_ssh(resource,args):
         logger.warn('Command includes a double quote (") and may cause '+
             'undesirable results. Swith to single quotes to avoid this '+
             'warning and undesirable outcomes')
-    p=ssh_execute('ssh '+resource['uname']+'@'+resource['hostname']+
-                            ' "cexec_worker '+args.execution_command+'"')
-    out=p.stdout.readlines()
-    print(out)
-    error=p.stderr.readlines()
-    print(p.stderr.readlines())
-    if error!=[]:
-        print(p.stderr.readlines())
-    
+    ssh_out_file="ssh_out.txt"
+    p=ssh_execute_no_wait('ssh '+
+        resource['uname']+'@'+resource['hostname']+
+        ' "'+resource['exec_dir']+'/cexec_worker '+
+        'run '+"'"+external_dir+"' '" +
+        args.execution_command+"'"+'" > '+ssh_out_file)
+    import time
+    time.sleep(1) 
+    #wait for some output (this might need to be adjusted based on ssh connect time)
+    with open(ssh_out_file,'r') as f:
+        lines=f.readlines()
+    os.remove(ssh_out_file)
+    for line in lines:
+        if "PID" in line:
+            pid_launched=line.split(":")[1]
+    logger.info("Pid on resource {} is {}".format(args.name,pid_launched))
+    #Store PID as currently being executed
+    with open(settings.DISTRIBUTED_PIDS,'a') as f:
+        f.writelines([line])
+
     #Add status and PID
-    
+
     
 
 def run_slurm(resource):

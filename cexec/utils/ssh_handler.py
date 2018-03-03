@@ -12,3 +12,14 @@ def ssh_execute(command):
                 stderr=subprocess.PIPE)
     p.wait()
     return p
+
+def ssh_execute_no_wait(command):
+    logger.info("Calling command but not waiting: {}".format(command))
+    p=subprocess.Popen([command],
+                shell=True,
+                stdin=None,
+                stdout=None,
+                stderr=None,
+                close_fds=True)
+    
+    return p

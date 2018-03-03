@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import sys
-
+from setup_script import install_src
 from setuptools import setup, find_packages
+
+install_src()
 
 with open("cexec/utils/version.py") as f:
     code = compile(f.read(), "cexec/utils/version.py", 'exec')
