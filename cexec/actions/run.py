@@ -16,7 +16,7 @@ def run_ssh(resource,args):
     if error!=[]:
         print(p.stderr.readlines())
     home=p.stdout.readlines()[0].decode('ASCII').strip('\n')
-    logger.info("External $HOME directory is {}".format(home))
+    logger.info("External $HOME directory is [{}]".format(home))
     #Copy Files
     local_dir=os.environ.get('PWD',None)
     if local_dir==None:
@@ -24,7 +24,7 @@ def run_ssh(resource,args):
         sys.exit()
     external_dir=os.path.join(home,settings.DISTRIBUTED_DIR_BASE)
     external_dir=external_dir+local_dir
-    logger.info("External execution directory is: {}".format(external_dir))
+    logger.info("External execution directory is [{}]".format(external_dir))
     p=ssh_execute('ssh '+resource['uname']+'@'+resource['hostname']+
                                             ' "mkdir -p '+external_dir+'"')
     error=p.stderr.readlines()
@@ -41,6 +41,7 @@ def run_ssh(resource,args):
             'undesirable results. Swith to single quotes to avoid this '+
             'warning and undesirable outcomes')
     ssh_out_file="ssh_out.txt"
+    #print(resource)
     p=ssh_execute_no_wait('ssh '+
         resource['uname']+'@'+resource['hostname']+
         ' "'+resource['exec_dir']+'/cexec_worker '+

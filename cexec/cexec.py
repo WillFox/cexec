@@ -14,6 +14,7 @@ from .utils.resource_interpreter import get_resource_list, print_resource_list
 import logging
 from .utils import version
 
+import sys
 import argparse
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -27,7 +28,7 @@ def configure_main(args):
 
 def run_main(args):
     logger.info("We are going to try to get a cloud to follow our orders!")
-    print(args)
+    #print(args)
     run.main(args)
 
 def status_main(args):
@@ -38,7 +39,7 @@ def status_main(args):
 def transfer_main(args):
     logger.info("Should we expect a drizzle or hurricane from this transfer")
     print(args)
-    transfer.main()
+    transfer.main(args)
 def kill_main(args):
     logger.info("Clouds all go in time!  This one's"+
                                 " time has come. RIP Cloud Willis!")
@@ -139,6 +140,9 @@ def _resources(subparsers):
     res_list.set_defaults(func=resources_main)
 
 def main():
+    if len(sys.argv)==1:#pthon 2 tox compatability
+        print("No input provided: try [cexec --help] for options")
+        sys.exit()
     args=menu_parser()
     if not args.parser==None:
         args.func(args)

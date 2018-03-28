@@ -50,10 +50,10 @@ def run_openstack():
     pass
 
 def main(args):
-    logger.info("Args Called: {}".format(args.execution_command))
+    logger.info("Args Called| {}".format(args.execution_command))
     resource_type=get_resource_type()
     if resource_type == 'ssh':
-        logger.info("Grabbed resource: {}".format(
+        logger.info("Grabbed resource| {}".format(
             args.execution_command
             ))
         run_ssh(args)

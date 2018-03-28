@@ -6,6 +6,7 @@ Each function configures its respective cloud technology
 from ..utils import settings
 import logging
 from ..utils.resource_interpreter import get_resource_list, write_resource_list
+from ..utils.resource_interpreter import install_cexec, instantiate_resource_type
 from ..utils.ssh_handler import ssh_execute
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -15,7 +16,7 @@ def configure_ssh(args):
                                                 args.type,args.name))
     #UGLY PYTHON2 and PYTHON3 compatability solution
     try:
-        input = raw_input
+        raw_input=input
     except NameError:
         pass
     #Request info for configuration
@@ -51,7 +52,8 @@ def configure_ssh(args):
 
     print(p.stdout.readlines())
     #install cexec in user directory (ask to do this)
-    
+    install_cexec(resource_dict)
+    instantiate_resource_type(resource_dict)
     #append cexec path (ask to do this)
 
     #Verify cexec on resource

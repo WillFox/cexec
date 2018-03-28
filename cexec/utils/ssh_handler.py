@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 
 def ssh_execute(command):
-    logger.info("Calling command: {}".format(command))
+    logger.info("Calling command [{}]".format(command))
     p=subprocess.Popen([command],
                 shell=True,
                 stdout=subprocess.PIPE,
@@ -14,7 +14,7 @@ def ssh_execute(command):
     return p
 
 def ssh_execute_no_wait(command):
-    logger.info("Calling command but not waiting: {}".format(command))
+    logger.info("Calling command but not waiting [{}]".format(command))
     p=subprocess.Popen([command],
                 shell=True,
                 stdin=None,

@@ -48,17 +48,24 @@ def print_resource_list():
 def get_resource(name):
     resources=get_resource_list()
     resource=resources.get(name,None)
-    print(resource)
+    #print(resource)
     if resource==None:
         logger.error("This resource does not exist: Exiting")
         sys.exit()    
     return resource
 
 def get_resource_type():
-    print(settings.RESOURCE_TYPE)
+    #print(settings.RESOURCE_TYPE)
     if not os.path.isfile(settings.RESOURCE_TYPE):
-        logging.error("The resource.type file is missing|Configure again")
+        logging.error("The resource.type file is missing|Configure again| {}".format(settings.RESOURCE_TYPE))
         sys.exit()
     with open(settings.RESOURCE_TYPE,'r') as f:
         resource_type=f.readlines()[0].strip('\n').strip('\r')
     return resource_type
+
+def install_cexec(resource_dict):
+    pass
+
+def instantiate_resource_type(resource_dict):
+    
+    pass
