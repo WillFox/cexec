@@ -14,6 +14,13 @@ from .worker_actions import run
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+from .utils import settings
+settings.init()
+if not settings.SET_VERBOSE:
+    logging.disable(logging.CRITICAL)
+
+
 def worker_run(args):
     print(args)
     run.main(args)

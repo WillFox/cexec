@@ -17,7 +17,7 @@ def test_run():
 
 def test_status():
     args=fake_menu()
-    status_main(args)
+    #status_main(args)
 
 def test_transfer():
     args=fake_menu()

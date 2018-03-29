@@ -1,6 +1,5 @@
 import os
 
-
 def init():
     global CONFIG_DIR
     CONFIG_DIR=os.path.join(os.environ.get('HOME','/etc/cexec'),'.cexec')
@@ -14,4 +13,6 @@ def init():
     DISTRIBUTED_PIDS=os.path.join(CONFIG_DIR,'pids.external')
     global LOCAL_PIDS
     LOCAL_PIDS=os.path.join(CONFIG_DIR,'pids.local')
+    global SET_VERBOSE
+    SET_VERBOSE=False
     

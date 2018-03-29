@@ -8,7 +8,7 @@ from ..utils import settings
 from ..utils.resource_interpreter import get_resource
 from ..utils.ssh_handler import ssh_execute
 
-def status_ssh(resource,args):
+def status_ssh(resource,args,verbose=True):
     #grab pid/execution dir
     with open(settings.DISTRIBUTED_PIDS,'r') as f:
         lines=f.readlines()
@@ -17,6 +17,7 @@ def status_ssh(resource,args):
         if line.split(":")[0]==args.name:
             run_list.append(line.split("\n")[0].split(":"))
     #Request ps status from external server
+    done=True
     for process in run_list:
         pid=process[2]
         p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -F {}'".format(pid))
@@ -25,11 +26,12 @@ def status_ssh(resource,args):
             print(p.stderr.readlines())
         process_lines=p.stdout.readlines()
         if len(process_lines)>1:
-            print("\tProcess [{}] RUNNING on [{}]".format(pid,args.name))
+            if verbose: print("\tProcess [{}] RUNNING on [{}]".format(pid,args.name))
+            done=False
         else:
-            print("\tProcess [{}] COMPLETED on [{}]".format(pid,args.name))
-            print("Run [cexec transfer -n {}] to retrieve results".format(args.name))
-        
+            if verbose: print("\tProcess [{}] COMPLETED on [{}]".format(pid,args.name))
+            if verbose: print("Run [cexec transfer -n {}] to retrieve results".format(args.name))
+    return done
 def status_slurm(resource):
     pass
 

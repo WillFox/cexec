@@ -18,9 +18,12 @@ import sys
 import argparse
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-logging.disable(logging.CRITICAL)
 from .utils import settings
 settings.init()
+
+if not settings.SET_VERBOSE:
+    logging.disable(logging.CRITICAL)
+
 def configure_main(args):
     logger.info("We are setting up a cloud. | Do you feel like Zeus yet?")
     print(args)
@@ -38,7 +41,7 @@ def status_main(args):
 
 def transfer_main(args):
     logger.info("Should we expect a drizzle or hurricane from this transfer")
-    print(args)
+    #print(args)
     transfer.main(args)
 def kill_main(args):
     logger.info("Clouds all go in time!  This one's"+
