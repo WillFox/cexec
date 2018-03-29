@@ -9,7 +9,7 @@ Function to initiate the various steps of the program including
     5. cexec kill <__user_given_name__>
 
 """
-from .actions import configure, run, transfer
+from .actions import configure, run, transfer,status
 from .utils.resource_interpreter import get_resource_list, print_resource_list
 import logging
 from .utils import version
@@ -18,7 +18,7 @@ import sys
 import argparse
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
+logging.disable(logging.CRITICAL)
 from .utils import settings
 settings.init()
 def configure_main(args):
@@ -34,7 +34,7 @@ def run_main(args):
 def status_main(args):
     logger.info("Click your heels three times and wish"+
                                     " for the cloud to respond!")
-    print(args)
+    status.main(args)
 
 def transfer_main(args):
     logger.info("Should we expect a drizzle or hurricane from this transfer")
@@ -126,6 +126,12 @@ def _transfer(subparsers):
                                                         "ITS RAINING!",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     con.set_defaults(func=transfer_main)
+    con.add_argument(
+        '-n',
+        '--name', 
+        type=str,
+        metavar="resource_name",
+        help="Specific resource to query status.")
 
 def _kill(subparsers): 
     con = subparsers.add_parser(

@@ -59,7 +59,7 @@ def run_ssh(resource,args):
     logger.info("Pid on resource {} is {}".format(args.name,pid_launched))
     #Store PID as currently being executed
     with open(settings.DISTRIBUTED_PIDS,'a') as f:
-        f.writelines([line])
+        f.writelines([args.name+":"+external_dir+":"+pid_launched])
 
     #Add status and PID
 
