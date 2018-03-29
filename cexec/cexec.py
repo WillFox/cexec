@@ -11,6 +11,7 @@ Function to initiate the various steps of the program including
 """
 from .actions import configure, run, transfer,status
 from .utils.resource_interpreter import get_resource_list, print_resource_list
+import time
 import logging
 from .utils import version
 
@@ -26,18 +27,36 @@ if not settings.SET_VERBOSE:
 
 def configure_main(args):
     logger.info("We are setting up a cloud. | Do you feel like Zeus yet?")
-    print(args)
     configure.main(args)
 
 def run_main(args):
     logger.info("We are going to try to get a cloud to follow our orders!")
     #print(args)
     run.main(args)
+    done=False
+    start=time.time()
+    diff=0
+    if True:
+        while not done:
+            for i in range(12):
+                if i==0 or i==4 or i==8: sys.stdout.write('  / | {:8.2f}\r'.format(diff))
+                if i==1 or i==5 or i==9:sys.stdout.write('  | | {:8.2f}\r'.format(diff))
+                if i==2 or i==6 or i==10:sys.stdout.write('  \\ | {:8.2f}\r'.format(diff))
+                if i==3 or i==7 or i==11:sys.stdout.write('  - | {:8.2f}\r'.format(diff))
+                #sys.stdout.flush()
+                time.sleep(0.5)
+            
+                diff=time.time()-start
+            done=status_main(args,verbose=False)
+        print("")
+        transfer_main(args)
 
-def status_main(args):
+
+def status_main(args,verbose=True):
     logger.info("Click your heels three times and wish"+
                                     " for the cloud to respond!")
-    status.main(args)
+    done=status.main(args,verbose=verbose)
+    return done
 
 def transfer_main(args):
     logger.info("Should we expect a drizzle or hurricane from this transfer")

@@ -51,12 +51,13 @@ def status_openstack(resource):
     pass
 
     
-def main(args):
+def main(args,verbose=True):
     resource=get_resource(args.name)
     logger.info("Args Called: {}|".format(args.name))
+    done=True
     if resource['type'] == 'ssh':
         logger.info("Grabbed resource: {}|{}|{}@{}".format(args.name,resource['type'],resource['uname'],resource['hostname']))
-        status_ssh(resource,args)
+        done=status_ssh(resource,args,verbose=verbose)
     elif resource['type'] == 'slurm':
         status_ssh(resource)
     elif resource['type'] == 'torque':
@@ -73,4 +74,4 @@ def main(args):
         print("Option "+resource['type']+" not supported")
         print("\tChoose from {ssh | slurm | torque | aws |"+
                             " google_cloud | azure | openstack}")
-    
+    return(done)

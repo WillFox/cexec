@@ -17,7 +17,7 @@ def run_ssh(args):
         cwd=directory,
         shell=True
         ).pid)
-    pid_matches=subprocess.Popen("ps -AF | grep '{}'".format(command),
+    pid_matches=subprocess.Popen("ps -AF | grep '{}'".format(command.split()[0]),
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)

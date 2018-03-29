@@ -1,4 +1,4 @@
-time sleep 3
+time sleep 25
 touch Im_HERE.txt
 cat test.txt
 uname -a

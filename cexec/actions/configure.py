@@ -5,6 +5,7 @@ Each function configures its respective cloud technology
 """
 from ..utils import settings
 import logging
+import os
 from ..utils.resource_interpreter import get_resource_list, write_resource_list
 from ..utils.resource_interpreter import install_cexec, instantiate_resource_type
 from ..utils.ssh_handler import ssh_execute
@@ -45,15 +46,24 @@ def configure_ssh(args):
         print("You ssh connection is now set up as passwordless:\n\t "+
             "You should only need to ever configure this once per resource")
     logger.info("Writing {0}@{1} to resouces".format(uname,hostname))
+    #Get execution directory
+    p=ssh_execute("ssh "+resource_dict[args.name]['uname']+
+        "@"+resource_dict[args.name]['hostname']+
+        " 'printf $HOME' | cut -d\\\\ -f2")
+    error=p.stderr.readlines()
+    if error!=[]:
+        print(p.stderr.readlines())
+    home=p.stdout.readlines()[0].decode('ASCII').strip('\n')
+    resource_dict[args.name]["exec_dir"]=os.path.join(home,".local/bin")
+
     #check if cexec installed on resource
     p=ssh_execute("ssh-copy-id "+uname+"@"+hostname+' "which cexec"')
     if p.stdout.readlines()==None:
         print(p.stdout.readlines())
 
     print(p.stdout.readlines())
-    #install cexec in user directory (ask to do this)
+    #install cexec in user directory of resource (ask to do this)
     install_cexec(resource_dict)
-    instantiate_resource_type(resource_dict)
     #append cexec path (ask to do this)
 
     #Verify cexec on resource
