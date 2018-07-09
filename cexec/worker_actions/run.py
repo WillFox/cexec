@@ -5,6 +5,8 @@ logging.disable(logging.CRITICAL)
 import subprocess
 import os
 import sys
+import psutil
+
 from ..utils import settings
 from ..utils.ssh_handler import ssh_execute
 from ..utils.resource_interpreter import get_resource, get_resource_type

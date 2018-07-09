@@ -15,4 +15,5 @@ Missing pieces in configure:
 -need to modify .bashrc to comment out non-interactive piece
 -need to convert from system calls to python's psutil.
 
-
+for proc in psutil.process_iter():
+    print(proc)
