@@ -60,7 +60,7 @@ def transfer_openstack(resource):
     
 def main(args):
     resource=get_resource(args.name)
-    logger.info("Args Called: {}|".format(args.name))
+    logger.info("Args Called: {}".format(args.name))
     if resource['type'] == 'ssh':
         logger.info("Grabbed resource: {}|{}|{}@{}".format(args.name,resource['type'],resource['uname'],resource['hostname']))
         transfer_ssh(resource,args)

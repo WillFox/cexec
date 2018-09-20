@@ -23,3 +23,5 @@ Missing pieces in configure:
 * ssh-keygen needs to be executed --post warning if not done yet
 * 
 
+for proc in psutil.process_iter():
+    print(proc)
