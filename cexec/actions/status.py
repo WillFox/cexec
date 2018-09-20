@@ -27,6 +27,7 @@ def status_ssh(resource,args,verbose=True):
         process_lines=p.stdout.readlines()
         if len(process_lines)>1:
             if verbose: print("\tProcess [{}] RUNNING on [{}]".format(pid,args.name))
+        
             done=False
         else:
             if verbose: print("\tProcess [{}] COMPLETED on [{}]".format(pid,args.name))

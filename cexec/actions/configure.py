@@ -85,9 +85,10 @@ def configure_ssh(args):
     #Register resource.type
     p=ssh_execute("ssh "+resource_dict[args.name]['uname']+
         "@"+resource_dict[args.name]['hostname']+
-        " 'echo ssh' > ~/.cexec/resource.type")
+        ' "'+"echo 'ssh' > "+home+"/.cexec/resource.type"+'"')
         #" 'printf $HOME' | cut -d\\\\ -f2")
     error=p.stderr.readlines()
+    print(error)
     if error!=[]:
         print(p.stderr.readlines())
     #append cexec path (ask to do this)
