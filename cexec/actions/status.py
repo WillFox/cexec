@@ -20,7 +20,7 @@ def status_ssh(resource,args,verbose=True):
     done=True
     for process in run_list:
         pid=process[2]
-        p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -F {}'".format(pid))
+        p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps {}'".format(pid), verbose=verbose)
         error=p.stderr.readlines()
         if error!=[]:
             print(p.stderr.readlines())
@@ -53,10 +53,10 @@ def status_openstack(resource):
     
 def main(args,verbose=True):
     resource=get_resource(args.name)
-    logger.info("Args Called: {}|".format(args.name))
+    if verbose: logger.info("Args Called: {}".format(args.name))
     done=True
     if resource['type'] == 'ssh':
-        logger.info("Grabbed resource: {}|{}|{}@{}".format(args.name,resource['type'],resource['uname'],resource['hostname']))
+        if verbose: logger.info("Grabbed resource: {} | {} | {}@{}".format(args.name,resource['type'],resource['uname'],resource['hostname']))
         done=status_ssh(resource,args,verbose=verbose)
     elif resource['type'] == 'slurm':
         status_ssh(resource)

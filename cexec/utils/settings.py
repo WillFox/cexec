@@ -14,5 +14,5 @@ def init():
     global LOCAL_PIDS
     LOCAL_PIDS=os.path.join(CONFIG_DIR,'pids.local')
     global SET_VERBOSE
-    SET_VERBOSE=False
+    SET_VERBOSE=True
     

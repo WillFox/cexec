@@ -4,8 +4,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def ssh_execute(command):
-    logger.info("Calling command [{}]".format(command))
+def ssh_execute(command,verbose=True):
+    if verbose: logger.info("Calling command [{}]".format(command))
     p=subprocess.Popen([command],
                 shell=True,
                 stdout=subprocess.PIPE,

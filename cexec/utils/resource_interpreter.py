@@ -20,7 +20,7 @@ def get_resource_list():
 
 def write_resource_list(resource_dict):
     with open(settings.CONFIG_FILE, 'w') as f:
-        yaml.dump(resource_dict, f, default_flow_style=False)
+        yaml.safe_dump(resource_dict, f, default_flow_style=False)
 
 def print_resource_list():
     resource_dict=get_resource_list()
@@ -64,7 +64,15 @@ def get_resource_type():
     return resource_type
 
 def install_cexec(resource_dict):
-    pass
+    logger.info("Attempting install cexec on remote resource")
+    #Check if cexec installed
+
+    #Sync files to ~/.cexec
+
+    #Test if pip available
+
+    #Run install script and check error status
+    
 
 def instantiate_resource_type(resource_dict):
     

@@ -23,7 +23,7 @@ from .utils import settings
 settings.init()
 
 if not settings.SET_VERBOSE:
-    logging.disable(logging.CRITICAL)
+    logging.disable(logging.WARNING)
 
 def configure_main(args):
     logger.info("We are setting up a cloud. | Do you feel like Zeus yet?")
@@ -43,7 +43,7 @@ def run_main(args):
                 if i==1 or i==5 or i==9:sys.stdout.write('  | | {:8.2f}\r'.format(diff))
                 if i==2 or i==6 or i==10:sys.stdout.write('  \\ | {:8.2f}\r'.format(diff))
                 if i==3 or i==7 or i==11:sys.stdout.write('  - | {:8.2f}\r'.format(diff))
-                #sys.stdout.flush()
+                sys.stdout.flush()
                 time.sleep(0.5)
             
                 diff=time.time()-start
@@ -53,7 +53,7 @@ def run_main(args):
 
 
 def status_main(args,verbose=True):
-    logger.info("Click your heels three times and wish"+
+    if verbose: logger.info("Click your heels three times and wish"+
                                     " for the cloud to respond!")
     done=status.main(args,verbose=verbose)
     return done

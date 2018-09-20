@@ -19,5 +19,7 @@ Missing pieces in configure:
     * exec_dir needs better method to find location of cexec install. 
 * need to modify .bashrc to comment out non-interactive piece
 * need to convert from system calls to python's psutil.
-
+* MacOS needs to check in sharing that port is open
+* ssh-keygen needs to be executed --post warning if not done yet
+* 
 

@@ -22,7 +22,7 @@ if not settings.SET_VERBOSE:
 
 
 def worker_run(args):
-    print(args)
+    #print(args)
     run.main(args)
     
 def worker_status(args):
