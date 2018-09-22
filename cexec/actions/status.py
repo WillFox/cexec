@@ -23,7 +23,7 @@ def status_ssh(resource,args,verbose=True):
         pid=process[2]
         #print("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -AF | grep "+'"'+pid+'"'+" | grep -v grep'")
         if resource['os']=="Linux":p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -AF | grep "+'"'+pid+'"'+" | grep -v grep'", verbose=verbose)
-        if resource['os']=="Darwin":p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -f | grep {} | grep -v grep'".format(pid), verbose=verbose)
+        if resource['os']=="Darwin":p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -Af | grep {} | grep -v grep'".format(pid), verbose=verbose)
         error=p.stderr.readlines()
         if error!=[]:
             print(p.stderr.readlines())

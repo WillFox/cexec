@@ -61,7 +61,7 @@ def run_main(args):
             sys.stdout.flush()
             #if len(file_out)!=last_len: print("")
             last_len=len(file_out)
-        print("")
+        print("\n\tRUNTIME: {}\n".format(diff))
         transfer_main(args)
 
 
