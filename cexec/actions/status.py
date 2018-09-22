@@ -21,7 +21,7 @@ def status_ssh(resource,args,verbose=True):
     done=True
     for process in run_list:
         pid=process[2]
-        p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -f {}'".format(pid), verbose=verbose)
+        p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'pgrep -f {}'".format(pid), verbose=verbose)
         error=p.stderr.readlines()
         if error!=[]:
             print(p.stderr.readlines())
