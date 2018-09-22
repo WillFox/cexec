@@ -16,11 +16,11 @@ def run_ssh(args):
     command=args.execution_command
     directory=args.directory
     logger.info("Running Command")
-    pid=str(subprocess.Popen([command+" > cexec.out 2>&1 &"],
-        cwd=directory,
-        shell=True
+    pid=str(subprocess.Popen(["/bin/bash","-c",command+" > cexec.out 2>&1 &"],
+        cwd=directory#,
+        #shell=True
         ).pid)
-    pid_matches=subprocess.Popen("pgrep '{}'".format(command.split()[0]),
+    pid_matches=subprocess.Popen("pgrep -f '{}'".format(command),#.split()[0]),
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE)
