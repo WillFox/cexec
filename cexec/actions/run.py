@@ -48,11 +48,12 @@ def run_ssh(resource,args):
         'run '+"'"+external_dir+"' '" +
         args.execution_command+"'"+'" > '+ssh_out_file)
     import time
-    time.sleep(1) 
+    time.sleep(3) 
     #wait for some output (this might need to be adjusted based on ssh connect time)
     with open(ssh_out_file,'r') as f:
         lines=f.readlines()
     #os.remove(ssh_out_file)
+    print(lines)
     for line in lines:
         if "PID" in line:
             pid_launched=line.split(":")[1]

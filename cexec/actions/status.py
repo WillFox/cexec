@@ -21,13 +21,14 @@ def status_ssh(resource,args,verbose=True):
     done=True
     for process in run_list:
         pid=process[2]
-        if resource['os']=="Linux":p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -F | grep {}'".format(pid), verbose=verbose)
-        if resource['os']=="Darwin":p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -f | grep {}'".format(pid), verbose=verbose)
+        #print("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -AF | grep "+'"'+pid+'"'+" | grep -v grep'")
+        if resource['os']=="Linux":p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -AF | grep "+'"'+pid+'"'+" | grep -v grep'", verbose=verbose)
+        if resource['os']=="Darwin":p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'ps -f | grep {} | grep -v grep'".format(pid), verbose=verbose)
         error=p.stderr.readlines()
         if error!=[]:
             print(p.stderr.readlines())
         process_lines=p.stdout.readlines()
-        if len(process_lines)>1:
+        if len(process_lines)>0:
             if verbose: print("\tProcess [{}] RUNNING on [{}]".format(pid,args.name))
             done=False
         else:

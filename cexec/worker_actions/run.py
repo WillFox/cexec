@@ -6,7 +6,7 @@ import subprocess
 import os
 import sys
 import psutil
-
+import time
 from ..utils import settings
 from ..utils.ssh_handler import ssh_execute
 from ..utils.resource_interpreter import get_resource, get_resource_type
@@ -20,6 +20,7 @@ def run_ssh(args):
         cwd=directory#,
         #shell=True
         ).pid)
+    time.sleep(2)
     pid_matches=subprocess.Popen("pgrep -f '{}'".format(command),#.split()[0]),
         shell=True,
         stdout=subprocess.PIPE,
@@ -40,6 +41,7 @@ def run_ssh(args):
     with open(pid_file,'a') as f:
         f.write(directory+":"+pid+'\n')    
     print("PIDOUT:"+pid)
+    #print("PIDOUT:"+str(os.getppid()))
 
 def run_slurm():
     pass
