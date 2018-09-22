@@ -37,6 +37,7 @@ def run_main(args):
     start=time.time()
     diff=0
     if True:
+        last_len=0
         while not done:
             for i in range(12):
                 if i==0 or i==4 or i==8: sys.stdout.write('  / | {:8.2f}\r'.format(diff))
@@ -45,9 +46,21 @@ def run_main(args):
                 if i==3 or i==7 or i==11:sys.stdout.write('  - | {:8.2f}\r'.format(diff))
                 sys.stdout.flush()
                 time.sleep(0.5)
-            
                 diff=time.time()-start
-            done=status_main(args,verbose=False)
+            [done,file_out]=status_main(args,verbose=False)
+            for line in range(0,len(file_out)):
+                if line<=(last_len-1): 
+                    #print("")
+                    pass
+                else:
+                    sys.stdout.write('                          \r'.format(diff))
+                    sys.stdout.flush()
+                    print(file_out[line].split("\n")[0])
+            
+            #print("")
+            sys.stdout.flush()
+            #if len(file_out)!=last_len: print("")
+            last_len=len(file_out)
         print("")
         transfer_main(args)
 

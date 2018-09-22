@@ -13,6 +13,7 @@ def status_ssh(resource,args,verbose=True):
     with open(settings.DISTRIBUTED_PIDS,'r') as f:
         lines=f.readlines()
     run_list=[]
+    run_dir=[]
     for line in lines:
         if line.split(":")[0]==args.name:
             run_list.append(line.split("\n")[0].split(":"))
@@ -31,8 +32,13 @@ def status_ssh(resource,args,verbose=True):
         else:
             if verbose: print("\tProcess [{}] COMPLETED on [{}]".format(pid,args.name))
             if verbose: print("Run [cexec transfer -n {}] to retrieve results".format(args.name))
+    p=ssh_execute("ssh "+resource['uname']+"@"+resource['hostname']+" 'cat "+process[1]+"/cexec.out'",verbose=verbose)
+    error=p.stderr.readlines()
+    if error!=[]:
+        print(p.stderr.readlines())
+    file_lines=p.stdout.readlines()
     #if pid=="-1": done=True
-    return done
+    return [done,file_lines]
 
 def status_slurm(resource):
     pass
