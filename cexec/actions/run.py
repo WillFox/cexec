@@ -30,8 +30,8 @@ def run_ssh(resource,args):
     error=p.stderr.readlines()
     if error!=[]:
         print(p.stderr.readlines())
-    p=ssh_execute('rsync -r * '+resource['uname']+'@'+resource['hostname']+
-                                                        ':'+external_dir)
+    p=ssh_execute('rsync -ah $PWD/ '+resource['uname']+'@'+resource['hostname']+
+                                                        ':'+external_dir+"/ --delete")
     error=p.stderr.readlines()
     if error!=[]:
         print(p.stderr.readlines())
